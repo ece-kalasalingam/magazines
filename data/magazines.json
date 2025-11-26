@@ -1,0 +1,29 @@
+[
+  {
+    "id": "2024-06",
+    "title": "ECE Insight – June 2025",
+    "year": 2025,
+    "month": "June",
+    "file": "magazines/ElectroComm-16.pdf",
+    "description": "Special issue on Industry 4.0 and smart systems.",
+    "coverImage": "covers/2025-06.jpg"
+  },
+  {
+    "id": "2024-12",
+    "title": "ECE Insight – December 2024",
+    "year": 2024,
+    "month": "December",
+    "file": "magazines/ElectroComm-15.pdf",
+    "description": "Year-end highlights, faculty achievements, and student projects.",
+    "coverImage": "covers/2024-12.jpg"
+  },
+  {
+    "id": "2024-06",
+    "title": "ECE Insight – June 2024",
+    "year": 2024,
+    "month": "June",
+    "file": "magazines/ElectroComm-8.pdf",
+    "description": "Focus on emerging VLSI, AI, and photonics research.",
+    "coverImage": "covers/2024-06.jpg"
+  }
+]
