@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ECE Department Magazines</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- jQuery + jQuery UI (needed by flipbook.min.js) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+
+  <!-- Flipbook & icons from Pdf-Flipbook repo -->
+  <link rel="stylesheet" type="text/css" href="css/flipbook.style.css" />
+  <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+  <link rel="stylesheet" type="text/css" href="css/footer.css" />
+
+  <link rel="shortcut icon" href="images/logo.png" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f5f5f7;
+      color: #111827;
+    }
+
+    /* Top bar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background: #ffffff;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      z-index: 100;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .topbar-logo {
+      height: 40px;
+      width: auto;
+    }
+
+    .topbar-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .topbar-sub {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* Main container */
+    .page {
+      padding: 72px 16px 16px;  /* space for fixed header */
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .page-header h1 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .search-input {
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      min-width: 200px;
+      background: #ffffff;
+    }
+
+    #statusMessage {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+
+    /* Card grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 14px;
+    }
+
+    .mag-card {
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.08s ease, box-shadow 0.08s ease;
+      cursor: pointer;
+    }
+
+    .mag-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.18);
+    }
+
+    .mag-cover {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      background: #e5e7eb;
+      display: block;
+    }
+
+    .mag-body {
+      padding: 8px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .mag-title {
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .mag-meta {
+      margin: 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .mag-desc {
+      margin: 0;
+      font-size: 0.78rem;
+      color: #4b5563;
+    }
+
+    /* Footer */
+    .footer-simple {
+      text-align: center;
+      padding: 12px 12px 16px;
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 480px) {
+      .topbar-title {
+        font-size: 0.85rem;
+      }
+      .topbar-sub {
+        display: none;
+      }
+    }
+  </style>
+
+  <!-- Flipbook JS (depends on jQuery & jQuery UI above) -->
+  <script src="js/flipbook.min.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <img src="images/logo.png" alt="ECE Logo" class="topbar-logo" />
+      <div>
+        <div class="topbar-title">ECE Department Magazines</div>
+        <div class="topbar-sub">Kalasalingam Academy of Research and Education</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="page">
+    <div class="page-header">
+      <h1>Magazine Archive</h1>
+      <input
+        type="search"
+        id="searchInput"
+        class="search-input"
+        placeholder="Search by title, year, month..."
+        aria-label="Search magazines"
+      />
+    </div>
+
+    <div id="statusMessage">Loading magazines…</div>
+
+    <section id="magazineGrid" class="grid">
+      <!-- Cards injected dynamically -->
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-simple">
+    © <span id="yearSpan"></span> ECE Department – Kalasalingam Academy of Research and Education
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById("yearSpan").textContent = new Date().getFullYear();
+
+    var statusEl = document.getElementById("statusMessage");
+    var gridEl = document.getElementById("magazineGrid");
+    var searchInput = document.getElementById("searchInput");
+
+    var allMagazines = [];
+    var filteredMagazines = [];
+
+    function loadMagazines() {
+      fetch("data/magazines.json", { cache: "no-cache" })
+        .then(function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json();
+        })
+        .then(function (data) {
+          if (!Array.isArray(data)) throw new Error("magazines.json must be an array");
+          allMagazines = data;
+          filteredMagazines = data.slice().sort(function (a, b) {
+            var ya = a.year || 0;
+            var yb = b.year || 0;
+            if (ya !== yb) return yb - ya;
+            return String(b.id || "").localeCompare(String(a.id || ""));
+          });
+          statusEl.textContent = filteredMagazines.length
+            ? filteredMagazines.length + " issue(s) available."
+            : "No magazines found.";
+          renderMagazines();
+        })
+        .catch(function (err) {
+          console.error(err);
+          statusEl.textContent = "Error loading magazines list (data/magazines.json).";
+        });
+    }
+
+    function renderMagazines() {
+      gridEl.innerHTML = "";
+      if (!filteredMagazines.length) {
+        statusEl.textContent = "No magazines match your search.";
+        return;
+      }
+
+      filteredMagazines.forEach(function (mag) {
+        var card = document.createElement("div");
+        card.className = "mag-card mag-item";
+
+        card.dataset.file = mag.file;
+        card.dataset.title = mag.title || "";
+        card.dataset.description = mag.description || "";
+        card.dataset.size = mag.size || "";
+        card.dataset.year = mag.year || "";
+        card.dataset.month = mag.month || "";
+
+        var img = document.createElement("img");
+        img.className = "mag-cover";
+        img.src = mag.coverImage || "images/logo.png";
+        img.alt = mag.title || "Magazine cover";
+
+        var body = document.createElement("div");
+        body.className = "mag-body";
+
+        var titleEl = document.createElement("p");
+        titleEl.className = "mag-title";
+        titleEl.textContent = mag.title || mag.id || "Magazine";
+
+        var metaEl = document.createElement("p");
+        metaEl.className = "mag-meta";
+        var year = mag.year ? String(mag.year) : "";
+        var month = mag.month || "";
+        var size = mag.size || "";
+        var metaParts = [];
+        if (month || year) metaParts.push([month, year].filter(Boolean).join(" "));
+        if (size) metaParts.push(size);
+        metaEl.textContent = metaParts.join(" • ");
+
+        var descEl = document.createElement("p");
+        descEl.className = "mag-desc";
+        descEl.textContent = mag.description || "";
+
+        body.appendChild(titleEl);
+        body.appendChild(metaEl);
+        if (descEl.textContent) body.appendChild(descEl);
+
+        card.appendChild(img);
+        card.appendChild(body);
+        gridEl.appendChild(card);
+      });
+
+      attachFlipbooks();
+    }
+
+    function attachFlipbooks() {
+      $(".mag-item").each(function () {
+        var $card = $(this);
+        var pdfFile = $card.data("file");
+        if (!pdfFile) return;
+
+        $card.flipBook({
+          pdfUrl: pdfFile,
+          lightBox: true,
+          viewMode: "3d",
+          layout: 3,
+
+          btnPrint: {
+            hideOnMobile: true
+          },
+          btnDownloadPages: {
+            enabled: false
+          },
+
+          btnColor: "rgb(255,120,60)",
+          sideBtnRadius: 60,
+          sideBtnSize: 60,
+          sideBtnBackground: "rgba(0,0,0,.7)",
+          sideBtnColor: "rgb(255,120,60)",
+          currentPage: { vAlign: "bottom", hAlign: "left" },
+          btnSound: { vAlign: "top", hAlign: "left" },
+          btnAutoplay: { vAlign: "top", hAlign: "left" },
+
+          btnShare: {
+            enabled: false
+          }
+        });
+      });
+    }
+
+    // Search
+    searchInput.addEventListener("input", function () {
+      var q = (this.value || "").toLowerCase().trim();
+      if (!q) {
+        filteredMagazines = allMagazines.slice();
+      } else {
+        filteredMagazines = allMagazines.filter(function (mag) {
+          var hay =
+            (mag.title || "") +
+            " " +
+            (mag.month || "") +
+            " " +
+            (mag.year || "") +
+            " " +
+            (mag.description || "");
+          return hay.toLowerCase().indexOf(q) !== -1;
+        });
+      }
+      renderMagazines();
+    });
+
+    document.addEventListener("DOMContentLoaded", loadMagazines);
+  </script>
+</body>
+</html>
