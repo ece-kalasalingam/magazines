@@ -1,29 +1,65 @@
 [
   {
-    "id": "2024-06",
-    "title": "ECE Insight – June 2025",
-    "year": 2025,
-    "month": "June",
-    "file": "magazines/ElectroComm-16.pdf",
-    "description": "Special issue on Industry 4.0 and smart systems.",
+    "id": "2010-02",
+    "title": "Electrocomm – Issue No. 3",
+    "year": 2010,
+    "month": "September",
+    "file": "magazines/ElectroComm-3.pdf",
+    "description": "",
     "coverImage": "covers/2025-06.jpg"
   },
   {
-    "id": "2024-12",
-    "title": "ECE Insight – December 2024",
-    "year": 2024,
-    "month": "December",
-    "file": "magazines/ElectroComm-15.pdf",
-    "description": "Year-end highlights, faculty achievements, and student projects.",
+    "id": "2011-01",
+    "title": "Electrocomm – Issue No. 4",
+    "year": 2011,
+    "month": "February",
+    "file": "magazines/ElectroComm-4.pdf",
+    "description": "",
     "coverImage": "covers/2024-12.jpg"
   },
   {
-    "id": "2024-06",
-    "title": "ECE Insight – June 2024",
-    "year": 2024,
-    "month": "June",
+    "id": "2012-01",
+    "title": "Electrocomm – Issue No. 6",
+    "year": 2012,
+    "month": "April",
+    "file": "magazines/ElectroComm-6.pdf",
+    "description": "",
+    "coverImage": "covers/2024-12.jpg"
+  },
+  {
+    "id": "2012-02",
+    "title": "Electrocomm – Issue No. 7",
+    "year": 2012,
+    "month": "October",
+    "file": "magazines/ElectroComm-7.pdf",
+    "description": "",
+    "coverImage": "covers/2025-06.jpg"
+  },
+  {
+    "id": "2013-01",
+    "title": "Electrocomm – Issue No. 8",
+    "year": 2013,
+    "month": "April",
     "file": "magazines/ElectroComm-8.pdf",
-    "description": "Focus on emerging VLSI, AI, and photonics research.",
+    "description": "",
+    "coverImage": "covers/2024-06.jpg"
+  },
+  {
+    "id": "2024-02",
+    "title": "Electrocomm – Issue No. 29",
+    "year": 2024,
+    "month": "October",
+    "file": "magazines/ElectroComm-29.pdf",
+    "description": "",
+    "coverImage": "covers/2025-06.jpg"
+  },
+  {
+    "id": "2025-01",
+    "title": "Electrocomm – Issue No. 30",
+    "year": 2025,
+    "month": "April",
+    "file": "magazines/ElectroComm-30.pdf",
+    "description": "",
     "coverImage": "covers/2024-06.jpg"
   }
 ]
