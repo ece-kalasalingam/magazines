@@ -18,7 +18,9 @@
   <link rel="shortcut icon" href="images/logo.png" />
 
   <!-- Flipbook JS (depends on jQuery & jQuery UI above) -->
+  <script src="js/pdf.min.js"></script>
   <script src="js/flipbook.min.js"></script>
+  <script src="js/pdfThumbnails.js"></script>
 </head>
 <body>
 
@@ -108,15 +110,17 @@
 
         card.dataset.file = mag.file;
         card.dataset.title = mag.title || "";
-        card.dataset.description = mag.description || "";
-        card.dataset.size = mag.size || "";
         card.dataset.year = mag.year || "";
         card.dataset.month = mag.month || "";
 
         var img = document.createElement("img");
         img.className = "mag-cover";
-        img.src = mag.coverImage || "images/logo.png";
+        img.src = "images/pdf.jpg";
         img.alt = mag.title || "Magazine cover";
+	img.width="200";
+	img.dataset.pdfThumbnailFile = mag.file;
+	img.dataset.pdfThumbnailWidth = "200";
+	img.dataset.pdfThumbnailHeight = "200";
 
         var body = document.createElement("div");
         body.className = "mag-body";
@@ -149,6 +153,9 @@
       });
 
       attachFlipbooks();
+      if (typeof createPDFThumbnails === "function") {
+	createPDFThumbnails();
+      }
     }
 
     function attachFlipbooks() {
